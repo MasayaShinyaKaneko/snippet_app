@@ -1,3 +1,6 @@
+
+<!-- テストファイル -->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,6 +19,11 @@
         <li v-for="data in list">{{ data.title }}</li>
       </ul>
       <button v-on:click="listSnippet">listSnippet</button>
+      <div>
+        <input v-model="title" placeholder="title"> <!-- 説明 2.23 -->
+        <input v-model="language" placeholder="language">
+        <input v-model="contents" placeholder="contents">
+      </div>
       <button v-on:click="postSnippet">postSnippet</button>
     </div>
 
@@ -26,7 +34,10 @@
           return {
             message: 'Hello Vue!',
             message2: 'Hoge',
-            list: [{title:'title1'}, {title:'title2'}]
+            list: [{title:'title1'}, {title:'title2'}],
+            title: 'new title',
+            language: 'Ruby',
+            contents: 'contents'
           }
         },
         mounted () {
@@ -52,9 +63,9 @@
             );
           },
           postSnippet: function() {
-            axios.post('/snippets.json', {title:'title', language:'Ruby', contents:'contents'}) // 説明 2.21
+            axios.post('/snippets.json', {title:'title', language:'Ruby', contents:'contents'})
               .then(response => (
-                this.listSnippet()  // 説明 2.22
+                this.listSnippet()
               )
             );
           }
