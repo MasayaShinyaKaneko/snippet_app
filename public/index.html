@@ -29,12 +29,13 @@
             </div>
           </v-flex>
           <v-flex xs7>
-            <v-card style="margin-top:10px">
+            <v-card style="margin-top:10px" v-for="snippet in snippetList">
+          <!-- v-for="新たな変数名 in data()で定義した配列"はdata()で定義した配列の各要素を要素の数分だけ新たな変数snippetに代入 -->
               <v-card-title primary-title>
-                <h3 class="headline">Snippet Title</h3>
+                <h3 class="headline"> {{ snippet.title }} </h3>
               </v-card-title>
               <div style="margin:10px 20px;">
-                <textarea style='width:100%; height:300px; background-color:#efefef; padding:3px;'>hoge</textarea>
+                <textarea style='width:100%; height:300px; background-color:#efefef; padding:3px'> {{ snippet.contents }} </textarea>
               </div>
               <v-card-actions>
                 <v-btn flat color="red">Update</v-btn>
@@ -51,14 +52,23 @@
         el: '#app',
         data () {
           return {
-
+            snippetList: ['',''],
+            allData: ['',''],
           }
         },
         mounted () {
-
+          this.listSnippet();
         },
         methods: {
-
+          listSnippet: function() {
+            axios.get('/snippets.json')
+              .then(response => {
+                this.allData = response.data
+                this.snippetList = this.allData
+                console.log(this.snippetList);
+              }
+            );
+          },
         }
       })
 
